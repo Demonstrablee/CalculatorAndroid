@@ -66,7 +66,7 @@ fun TipTimeLayout(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.Center
 
     ){
-        var amountInput by remember {mutableStateOf(" ")} //hoisted state
+        var amountInput by remember {mutableStateOf("")} //hoisted state
         var tipInput by remember { mutableStateOf("") }
         var roundUp by remember { mutableStateOf(false) }
 
@@ -76,10 +76,11 @@ fun TipTimeLayout(modifier: Modifier = Modifier) {
 
 
         Text(text = "Calculate Tip")
+
         EditNumberField(
             value = amountInput,
             label= R.string.bill_amount,
-            onValueChange = {amountInput= it},
+            onValueChange = {amountInput = it},
             modifier = Modifier
                 .padding(bottom = 32.dp).fillMaxWidth()
         )
@@ -140,7 +141,7 @@ fun EditNumberField(
 @Composable
 fun RoundTheTipRow(
     roundUp: Boolean,
-    onRoundUpChanged: (Boolean) -> Unit,
+    onRoundUpChanged: (Boolean) -> Unit, // lambda
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -161,7 +162,7 @@ fun RoundTheTipRow(
 private fun calculateTip(amount: Double, tipPercent: Double, roundUp: Boolean): String {
     var tip = tipPercent / 100 * amount
     if (roundUp) {
-        tip = kotlin.math.ceil(tip)
+        tip = kotlin.math.ceil(tip) //ceiling math
     }
     return NumberFormat.getCurrencyInstance().format(tip)
 }
@@ -169,8 +170,6 @@ private fun calculateTip(amount: Double, tipPercent: Double, roundUp: Boolean): 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-
-   //val user: String = if (readLine().toString() == null) readLine().toString() else "Andy"
 
     CalculatorAndroidTheme {
         TipTimeLayout()
